@@ -8,7 +8,7 @@ export default async function AramaPage({ searchParams }: { searchParams: Promis
   return (
     <div className="container mx-auto py-8 px-4">
       <h1 className="text-2xl font-bold mb-6">
-        "{query}" için sonuçlar
+      {"\""}{query}{"\""} için sonuçlar
       </h1>
       {posts.length === 0 ? (
         <p>Sonuç bulunamadı.</p>
