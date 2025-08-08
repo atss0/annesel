@@ -112,7 +112,11 @@ export default async function CategoryPage(props: { params: Promise<{ slug?: str
           {posts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post: any) => {
-                const image = post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder.svg'
+                const image =
+                  post._embedded?.['wp:featuredmedia']?.[0]?.source_url ||
+                  post._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes?.medium_large?.source_url ||
+                  post._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes?.full?.source_url ||
+                  '/placeholder.svg'
                 const author = post._embedded?.author?.[0]?.name || 'Annesel'
                 const date = new Date(post.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })
                 const excerpt = post.excerpt.rendered.replace(/(<([^>]+)>)/gi, "")

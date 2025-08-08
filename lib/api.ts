@@ -27,13 +27,13 @@ export async function getBlogPostBySlug(slug: string) {
 }
 
 export async function getPostsByCategorySlug(slug: string) {
-    const resCat = await fetch(`${process.env.WORDPRESS_API_URL}/categories?slug=${slug}`)
+    const resCat = await fetch(`${process.env.WORDPRESS_API_URL}/categories?slug=${slug}&_embed`)
     const categories = await resCat.json()
     const category = categories[0]
 
     if (!category) return []
 
-    const res = await fetch(`${process.env.WORDPRESS_API_URL}/posts?categories=${category.id}`)
+    const res = await fetch(`${process.env.WORDPRESS_API_URL}/posts?categories=${category.id}&_embed`)
     return await res.json()
 }
 
