@@ -29,7 +29,7 @@ export default function FeaturedPostsClient({ posts }: Props) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {posts.map((post, index) => {
             const image = post._embedded['wp:featuredmedia'][0]?.source_url
-            const author = post._embedded.author[0]?.name
+            const author = 'Annesel Ekibi' // Static author for featured posts
             const category = post._embedded['wp:term'][0]?.[0]?.name || 'Genel'
             const excerpt = post.excerpt?.rendered?.replace(/<[^>]+>/g, '')?.slice(0, 100) + '...'
 

@@ -117,7 +117,7 @@ export default async function CategoryPage(props: { params: Promise<{ slug?: str
                   post._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes?.medium_large?.source_url ||
                   post._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes?.full?.source_url ||
                   '/placeholder.svg'
-                const author = post._embedded?.author?.[0]?.name || 'Annesel'
+                const author = 'Annesel Ekibi'
                 const date = new Date(post.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })
                 const excerpt = post.excerpt.rendered.replace(/(<([^>]+)>)/gi, "")
                 const title = post.title.rendered
