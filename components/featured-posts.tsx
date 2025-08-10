@@ -22,7 +22,7 @@ export default async function FeaturedPosts() {
   // Rastgele sırala ve 3 tanesini al
   const selectedPosts = filtered.sort(() => 0.5 - Math.random()).slice(0, 3)
 
-  const postsWithReadTime = selectedPosts.map((post) => ({
+  const postsWithReadTime = selectedPosts.map((post: any) => ({
     ...post,
     readTime: getReadingTime(post.content.rendered),
   }))

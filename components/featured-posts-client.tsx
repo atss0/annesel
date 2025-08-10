@@ -5,12 +5,25 @@ import { Badge } from '@/components/ui/badge'
 import { Clock, User, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { getFeaturedImage, getPrimaryCategory, getTitle, getExcerpt } from '@/utils/wpSafe'
 
-type Props = {
-  posts: any[]
-}
+type Props = { posts: any[] }
 
 export default function FeaturedPostsClient({ posts }: Props) {
+  const items = Array.isArray(posts) ? posts : []
+
+  // Build aşamasında hiç post yoksa bile patlamasın:
+  if (items.length === 0) {
+    return (
+      <section className="py-16 lg:py-24 bg-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">İlgini Çekebilecek Yazılar</h2>
+          <p className="text-gray-600">Henüz içerik yok. Yakında burada göreceksiniz.</p>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="py-16 lg:py-24 bg-white">
       <div className="container mx-auto px-4">
@@ -21,17 +34,15 @@ export default function FeaturedPostsClient({ posts }: Props) {
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
             İlgini Çekebilecek Yazılar
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            İlginizi çekebilecek yazıları keşfedin
-          </p>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">İlginizi çekebilecek yazıları keşfedin</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {posts.map((post, index) => {
-            const image = post._embedded['wp:featuredmedia'][0]?.source_url
-            const author = 'Annesel Ekibi' // Static author for featured posts
-            const category = post._embedded['wp:term'][0]?.[0]?.name || 'Genel'
-            const excerpt = post.excerpt?.rendered?.replace(/<[^>]+>/g, '')?.slice(0, 100) + '...'
+          {items.map((post) => {
+            const image = getFeaturedImage(post) ?? '/placeholder.jpg'
+            const category = getPrimaryCategory(post)
+            const excerpt = getExcerpt(post)
+            const titleHTML = getTitle(post) // HTML entity’li (decode’u render’da yapacağız)
 
             return (
               <Card key={post.id} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg overflow-hidden relative p-0">
@@ -39,28 +50,26 @@ export default function FeaturedPostsClient({ posts }: Props) {
                 <div className="relative overflow-hidden">
                   <Image
                     src={image}
-                    alt={post.title.rendered}
+                    alt={category}
                     width={400}
                     height={300}
-                    className={`w-full object-cover transition-transform duration-300 group-hover:scale-105 lg:h-80 h-48`}
+                    className="w-full object-cover transition-transform duration-300 group-hover:scale-105 lg:h-80 h-48"
+                    priority={false}
                   />
                   <div className="absolute top-4 left-4">
-                    <Badge className="bg-purple-600 hover:bg-purple-700 text-white">
-                      {category}
-                    </Badge>
+                    <Badge className="bg-purple-600 hover:bg-purple-700 text-white">{category}</Badge>
                   </div>
                 </div>
 
-                <CardContent className={`p-6 relative z-20`}>
-                  <h3 className={`font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors duration-200 lg:text-2xl text-lg'}`}>
+                <CardContent className="p-6 relative z-20">
+                  <h3 className="font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors duration-200 lg:text-2xl text-lg">
                     <Link href={`/blog/${post.slug}`}>
-                      {post.title.rendered}
+                      {/* title.rendered HTML encoded → güvenli decode */}
+                      <span dangerouslySetInnerHTML={{ __html: titleHTML }} />
                     </Link>
                   </h3>
 
-                  <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                    {excerpt}
-                  </p>
+                  <p className="text-gray-600 mb-4 text-sm leading-relaxed">{excerpt}</p>
 
                   <div className="flex items-center justify-between text-sm text-gray-500">
                     <div className="flex items-center space-x-4">
