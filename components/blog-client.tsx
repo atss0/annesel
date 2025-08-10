@@ -46,7 +46,7 @@ export default function BlogClient({ posts, currentPage, totalPages }: Props) {
                 <Link href={`/blog/${post.slug}`} className="absolute inset-0 z-10" />
                 <div className="relative overflow-hidden">
                   <Image
-                    src={image}
+                    src={image || '/placeholder.svg'}
                     alt={title}
                     width={400}
                     height={300}

@@ -5,6 +5,8 @@ import Breadcrumb from '@/components/breadcrumb'
 import Image from 'next/image'
 import { Clock, User, Calendar, Tag } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import Comments from '@/components/comments/comments'
+import styles from '@/styles/wordpress-content.module.css'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params
@@ -79,7 +81,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const image = post._embedded?.['wp:featuredmedia']?.[0]?.source_url
   const publishDate = new Date(post.date)
   const modifiedDate = new Date(post.modified)
-  
+
   // Calculate reading time
   const wordCount = post.content.rendered.replace(/<[^>]*>/g, '').split(/\s+/).length
   const readingTime = Math.ceil(wordCount / 200)
@@ -127,7 +129,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       />
       <div className="container mx-auto px-4 py-8">
         <Breadcrumb items={breadcrumbItems} />
-        
+
         <article className="max-w-4xl mx-auto">
           {/* Featured Image */}
           {image && (
@@ -163,7 +165,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 <User className="h-4 w-4 mr-2" />
                 <span>Annesel Ekibi</span>
               </div>
-              
+
               <div className="flex items-center">
                 <Calendar className="h-4 w-4 mr-2" />
                 <time dateTime={post.date}>
@@ -190,7 +192,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
           {/* Article Content */}
           <div
-            className="prose prose-lg max-w-none break-words overflow-hidden prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-purple-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-img:rounded-lg prose-img:shadow-md"
+            className={styles.wordpressContent}
             dangerouslySetInnerHTML={{ __html: post.content.rendered }}
           />
 
@@ -200,11 +202,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               <div className="text-sm text-gray-600">
                 Bu makale {wordCount} kelime içeriyor ve yaklaşık {readingTime} dakikada okunabilir.
               </div>
-              
+
               {category && (
                 <div className="text-sm">
                   <span className="text-gray-600">Kategori: </span>
-                  <a 
+                  <a
                     href={`/kategori/${category.slug}`}
                     className="text-purple-600 hover:text-purple-700 font-medium"
                   >
@@ -214,6 +216,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               )}
             </div>
           </footer>
+
+          <section className="mt-16">
+            <Comments postId={post.id} />
+          </section>
         </article>
       </div>
     </>

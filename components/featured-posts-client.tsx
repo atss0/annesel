@@ -66,7 +66,7 @@ export default function FeaturedPostsClient({ posts }: Props) {
                     <div className="flex items-center space-x-4">
                       <div className="flex items-center">
                         <User className="h-4 w-4 mr-1" />
-                        Annesel
+                        Annesel Ekibi
                       </div>
                       <div className="flex items-center">
                         <Clock className="h-4 w-4 mr-1" />

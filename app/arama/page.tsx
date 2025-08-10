@@ -16,7 +16,7 @@ export default async function AramaPage({ searchParams }: { searchParams: Promis
         <ul className="space-y-4">
           {posts.map((post: any) => (
             <li key={post.id} className="border p-4 rounded shadow">
-              <a href={`/yazi/${post.slug}`} className="text-lg font-semibold text-purple-700 hover:underline">
+              <a href={`/blog/${post.slug}`} className="text-lg font-semibold text-purple-700 hover:underline">
                 {post.title.rendered}
               </a>
               <div
