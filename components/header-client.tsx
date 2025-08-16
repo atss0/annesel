@@ -23,6 +23,8 @@ export default function HeaderClient({ site, categories }: Props) {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [searchQuery, setSearchQuery] = useState('')
 
+    console.log(categories)
+
     const staticPages = [
         { name: 'Hakkımızda', href: '/hakkimizda' },
         { name: 'İletişim', href: '/iletisim' }
@@ -70,7 +72,7 @@ export default function HeaderClient({ site, categories }: Props) {
                         <nav className="hidden lg:flex items-center space-x-8">
                             {Array.isArray(categories) &&
                                 categories
-                                    .filter((cat) => cat.slug.trim().toLowerCase() !== "uncategorized")
+                                .filter(c => c.slug.toLowerCase() !== 'uncategorized') 
                                     .map((cat) => (
                                         <Link
                                             key={cat.id}
