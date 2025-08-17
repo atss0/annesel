@@ -3,7 +3,6 @@ import { CATEGORIES_BY_URL } from "@/data/categories";
 const API_URL = process.env.WORDPRESS_API_URL
 
 export async function getAllPosts() {
-  console.log('Fetching all posts from:', API_URL)
   const res = await fetch(`${API_URL}/posts?_embed`, { next: { revalidate: 60 } })
   if (!res.ok) throw new Error('Yazılar çekilemedi')
   return res.json()

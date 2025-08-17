@@ -8,23 +8,23 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Clock, User, ArrowRight } from 'lucide-react'
 
-// METADATA
-
-export async function generateMetadata(
-  context: { params: Promise<{ slug: string }> }
-): Promise<Metadata> {
+// ✅ METADATA düzeltildi - params await edildi
+export async function generateMetadata(context: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const params = await context.params
+  const slug = params.slug
   const categories = await getCategories()
-  const category = categories.find((cat: any) => cat.slug === params.slug)
+  const category = categories.find((cat: any) => cat.slug === slug)
 
   if (!category) {
     return {
-      title: 'Kategori Bulunamadı - Annesel'
+      title: 'Kategori Bulunamadı - Annesel',
     }
   }
 
   const title = `${category.name} - Annelik Rehberi ve Uzman Tavsiyeleri`
-  const description = category.description || `${category.name} kategorisindeki annelik yazılarını keşfedin. Uzman tavsiyeleri ve deneyimler.`
+  const description =
+    category.description ||
+    `${category.name} kategorisindeki annelik yazılarını keşfedin. Uzman tavsiyeleri ve deneyimler.`
 
   return {
     title,
@@ -36,13 +36,13 @@ export async function generateMetadata(
       'hamilelik',
       'çocuk gelişimi',
       'anne sağlığı',
-      'ebeveynlik'
+      'ebeveynlik',
     ],
     openGraph: {
       title,
       description,
       type: 'website',
-      url: `/kategori/${params.slug}`,
+      url: `/kategori/${slug}`,
       images: [
         {
           url: '/logo.png',
@@ -58,7 +58,7 @@ export async function generateMetadata(
       description,
     },
     alternates: {
-      canonical: `/kategori/${params.slug}`,
+      canonical: `/kategori/${slug}`,
     },
     robots: {
       index: true,
@@ -67,10 +67,10 @@ export async function generateMetadata(
   }
 }
 
-export default async function CategoryPage(props: { params: { slug: string } }) {
-  const params = props.params
-  const slug = params.slug
-
+// ✅ SAYFA bileşeninde de params await edildi
+export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  
   if (!slug || slug === 'uncategorized') {
     notFound()
   }
@@ -127,7 +127,7 @@ export default async function CategoryPage(props: { params: { slug: string } }) 
                     <Link href={`/blog/${post.slug}`} className="absolute inset-0 z-10" />
                     <div className="relative overflow-hidden">
                       <Image
-                        src={image || "/placeholder.svg"}
+                        src={image}
                         alt={title}
                         width={400}
                         height={300}

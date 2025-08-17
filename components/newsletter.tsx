@@ -36,7 +36,6 @@ export default function Newsletter() {
         alert(result.message || 'Bu e-posta zaten kayıtlı.')
       }
     } catch (err) {
-      console.error('Hata:', err)
       alert('Bir hata oluştu. Lütfen tekrar deneyin.')
     }
     finally {

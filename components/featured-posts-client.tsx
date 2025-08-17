@@ -42,7 +42,6 @@ export default function FeaturedPostsClient({ posts }: Props) {
             const image = getFeaturedImage(post) ?? '/placeholder.svg'
             const category = getPrimaryCategory(post)
             const excerpt = getExcerpt(post)
-            console.log(excerpt)
             const titleHTML = getTitle(post) // HTML entity’li (decode’u render’da yapacağız)
 
             return (

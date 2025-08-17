@@ -49,7 +49,6 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.error('WordPress API Error:', errorData);
       return NextResponse.json(
         { error: 'Yorum gönderilemedi' },
         { status: response.status }
@@ -60,7 +59,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true, comment: result });
 
   } catch (error) {
-    console.error('Comment submission error:', error);
     return NextResponse.json(
       { error: 'Sunucu hatası' },
       { status: 500 }

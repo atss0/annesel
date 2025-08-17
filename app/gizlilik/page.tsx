@@ -9,8 +9,6 @@ export default async function GizlilikPage() {
     return (
         <main className="container mx-auto px-4 py-12">
             <h1 className="text-3xl font-bold mb-6">{page.title.rendered}</h1>
-            import WordPressContent from '@/components/wordpress-content'
-
             <WordPressContent html={page.content.rendered} />
         </main>
     )
