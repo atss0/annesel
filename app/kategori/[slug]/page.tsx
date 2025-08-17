@@ -67,8 +67,8 @@ export async function generateMetadata(
   }
 }
 
-export default async function CategoryPage(props: { params: Promise<{ slug?: string }> }) {
-  const params = await props.params
+export default async function CategoryPage(props: { params: { slug: string } }) {
+  const params = props.params
   const slug = params.slug
 
   if (!slug || slug === 'uncategorized') {

@@ -39,9 +39,10 @@ export default function FeaturedPostsClient({ posts }: Props) {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {items.map((post) => {
-            const image = getFeaturedImage(post) ?? '/placeholder.jpg'
+            const image = getFeaturedImage(post) ?? '/placeholder.svg'
             const category = getPrimaryCategory(post)
             const excerpt = getExcerpt(post)
+            console.log(excerpt)
             const titleHTML = getTitle(post) // HTML entity’li (decode’u render’da yapacağız)
 
             return (

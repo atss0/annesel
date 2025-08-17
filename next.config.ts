@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "wp.hngsoftware.com",
+        hostname: "crmprojesi.fun",
       },
       {
         protocol: "http",
