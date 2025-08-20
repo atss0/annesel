@@ -2,6 +2,9 @@ import { getPageBySlug } from '@/lib/api'
 import { notFound } from 'next/navigation'
 import WordPressContent from '@/components/wordpress-content'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function KullanimSartlariPage() {
     const page = await getPageBySlug('kullanim-sartlari')
     if (!page) return notFound()
