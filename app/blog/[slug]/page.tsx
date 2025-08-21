@@ -7,6 +7,7 @@ import { Clock, User, Calendar, Tag } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import Comments from '@/components/comments/comments'
 import styles from '@/styles/wordpress-content.module.css'
+import * as cheerio from "cheerio";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params
@@ -121,6 +122,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     { label: post.title.rendered }
   ]
 
+  function stripLeadingDuplicateHeading(html: string, title: string) {
+    const $ = cheerio.load(html);
+  
+    // İlk h1 / h2 / h3 tagini bul
+    const firstHeading = $("h1, h2, h3").first();
+    if (firstHeading.length > 0) {
+      const headingText = firstHeading.text().trim().toLowerCase();
+      const normalizedTitle = title.trim().toLowerCase();
+  
+      if (headingText === normalizedTitle) {
+        firstHeading.remove(); // sadece başlığı sil
+      }
+    }
+  
+    return $.html().trim();
+  }
+
+  const contentHtml = stripLeadingDuplicateHeading(post.content.rendered, post.title.rendered);
+
   return (
     <>
       <script
@@ -193,7 +213,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           {/* Article Content */}
           <div
             className={styles.wordpressContent}
-            dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+            dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
 
           {/* Article Footer */}

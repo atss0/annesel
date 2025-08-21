@@ -64,7 +64,7 @@ export default function BlogClient({ posts, currentPage, totalPages }: Props) {
                   <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
                     <div className="flex items-center">
                       <Clock className="h-4 w-4 mr-1" />
-                      3 dk okuma
+                      {post.readTime || '1 dk'}
                     </div>
                     <div>{date}</div>
                   </div>
