@@ -81,7 +81,6 @@ export default function RootLayout({
   return (
     <html lang="tr" dir="ltr">
       <head>
-        <link rel="canonical" href="/canonical-url" />
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <meta name="theme-color" content="#9333ea" />
